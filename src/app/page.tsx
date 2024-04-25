@@ -33,6 +33,10 @@ const Page = () => {
     setTasks(updatedTasks);
   }
 
+  const reset = () => {
+    setTasks([])
+  }
+
   let sortedArray = sortArray(tasks)
   let copyArr = [...tasks]
   let firtstNotZero = tasks.findIndex(task => task.time !== 0)
@@ -46,12 +50,12 @@ const Page = () => {
   return (
     <div className='flex flex-col items-center font-mono'>
       <h1 className='text-green-500 font-semibold text-lg'>Algoritmos de procesador - Cristhian David Tapiero Padilla</h1>
-      <form onSubmit={handleSubmit} className='flex gap-3 ml-10 my-5'>
+      <form onSubmit={handleSubmit} className='flex gap-3 ml-10 mt-5'>
         <input type="text" placeholder='Tiempo de ej.' value={time} className='border-black border rounded-lg px-2 py-1' onChange={(e) => setTime(e.target.value)}></input>
         <input type="submit" className='bg-green-600 rounded-xl px-4 py-2 text-white font-semibold cursor-pointer hover:bg-green-700' value={"Enviar"}/>
       </form>
       { tasks.length>0 && <h2>Orden de llegada</h2>}
-      <div className='flex my-5'>
+      <div className={`flex ${tasks.length>0 && 'my-4'}`}>
         {
           tasks.map((item) => {
             const letters = [];
@@ -68,7 +72,7 @@ const Page = () => {
         }
       </div>
       {tasks.length>0 && <h2>Orden de menor tiempo (SJF)</h2>}
-      <div className='flex my-5'>
+      <div className={`flex ${tasks.length>0 && 'my-4'}`}>
         {
           sortedArray.map((item) => {
             const letters = [];
@@ -85,7 +89,7 @@ const Page = () => {
         }
       </div>
       {tasks.length > 0 && <h2>Tiempo restante mas corto (SRTF)</h2>}
-      <div className='flex my-5'>
+      <div className={`flex ${tasks.length>0 && 'my-4'}`}>
         {
           SRTF.map((item) => {
             const letters = [];
@@ -102,7 +106,7 @@ const Page = () => {
         }
       </div>
       {tasks.length>0 && <h2>Eliminar tarea</h2>}
-      <div className='flex my-5'>
+      <div className={`flex ${tasks.length>0 && 'my-4'}`}>
         {
           tasks.map((item) => {
             return(
@@ -113,6 +117,7 @@ const Page = () => {
           })
         }
       </div>
+      <button onClick={reset} className={`font-semibold text-white text-xl bg-red-600 rounded-xl py-3 px-5 mt-3 hover:bg-red-800 transition-colors disabled:bg-gray-800 disabled:text-white`} disabled={tasks.length == 0}>Eliminar todo</button>
     </div>
   );
 };
